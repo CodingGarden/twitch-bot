@@ -19,6 +19,20 @@ const helix = axios.create({
  */
 
 /**
+ * @typedef TwitchStream
+ * @prop {string} id The ID of the stream.
+ * @prop {string} user_id The Twitch API user ID.
+ * @prop {string} user_name The Twitch API display name.
+ * @prop {string} game_id The ID of the game.
+ * @prop {"live" | ""} type Stream type.
+ * @prop {number} viewer_count
+ * @prop {string} started_at Date string.
+ * @prop {string} language
+ * @prop {string} thumbnail_url
+ * @see https://dev.twitch.tv/docs/api/reference#get-streams
+ */
+
+/**
  * @param {any} options
  * @param {string} options.token The OAuth token for the expected user.
  * @return {TwitchAPIUser}
@@ -64,9 +78,27 @@ async function getAccessToken(refresh_token) {
 	return data;
 }
 
+/**
+ * @param {string} user_id
+ * @return {TwitchStream}
+ * @see https://dev.twitch.tv/docs/api/reference#get-streams
+ */
+async function getStream(user_id) {
+	const qs = new URLSearchParams({
+		user_id
+	});
+	const { data: { data } } = await helix.get(`/streams?${qs}`, {
+		headers: {
+			'Client-ID': config.TWITCH_CLIENT_ID
+		}
+	});
+	return data[0] || null;
+}
+
 module.exports = {
 	authAPI,
 	getUser,
 	getUsers,
 	getAccessToken,
+	getStream
 };

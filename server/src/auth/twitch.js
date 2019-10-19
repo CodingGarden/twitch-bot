@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 		client_id: config.TWITCH_CLIENT_ID,
 		redirect_uri,
 		response_type: 'code',
-		scope: req.query.scope
+		scope: 'moderation:read'
 	});
 	const redirectUrl = `${twitchAPI.authAPI.defaults.baseURL}/authorize?${qs}`;
 	res.redirect(redirectUrl);
@@ -54,11 +54,13 @@ router.get('/callback', async (req, res) => {
 			)
 		]);
 		const loginToken = await jwt.sign({ twitchId });
-		res.json({
-			loginToken,
-			user,
-			channel
+		/** @see http://expressjs.com/en/4x/api.html#res.cookie */
+		res.cookie('token', loginToken, {
+			secure: process.env.NODE_ENV === 'production',
+			domain: process.env.HOST,
+			path: '/'
 		});
+		res.redirect('/');
 	} catch (error) {
 		res.json({
 			message: error.message,

@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const volleyball = require('volleyball');
 const helmet = require('helmet');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -21,15 +22,15 @@ app.use(express.json());
 
 app.use(middlewares.decodeAuthHeader);
 
-app.get('/', (req, res) => {
-	res.json({
-		message: 'Twitch Bot! 🤖',
-		login: 'http://localhost:8888/auth/twitch?scope=moderation:read'
-	});
-});
+app.use(express.static(path.join(__dirname, 'www'), { extensions: [ 'html' ] }));
 
 app.use('/auth/twitch', require('./auth/twitch'));
-app.use('/api/channel', require('./api/channel'));
+app.use('/api/channel', (req, res, next) => {
+	if (!req.user) {
+		next(new Error('Un-authorized'));
+	}
+	next();
+}, require('./api/channel'));
 
 app.use((req, res, next) => {
 	const error = new Error('Not Found - ' + req.originalUrl);
