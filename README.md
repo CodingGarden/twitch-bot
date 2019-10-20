@@ -27,3 +27,21 @@ http://localhost:8888/auth/twitch?scope=moderation:read
 * Green entities are completed.
 
 ![ERD](ERD.png)
+
+## 10-20-2019 TODO
+
+* [x] List all commands for a channel
+* [x] Add command to a channel
+	* [ ] `!so <name>`
+* [ ] Architect variables and replyText replacement/format
+* [ ] Review TODOs
+<!-- * [ ] Add more TODOs -->
+
+
+## TODO LATER
+
+* Schema validation with JOI
+
+## Colors
+
+https://coolors.co/57bc59-d7263d-0072bb-f6ae2d-f26419

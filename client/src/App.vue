@@ -16,10 +16,16 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/variables.scss';
+
 body {
   margin: 0;
   font-family: 'Share Tech', sans-serif;
   background: hsl(0, 0%, 8%);
   color: hsl(0, 0%, 100%);
+}
+
+.error {
+  color: $red;
 }
 </style>

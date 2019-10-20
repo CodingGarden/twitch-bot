@@ -70,6 +70,8 @@ router.post('/:twitchId/commands', ensureUserAccess, async (req, res, next) => {
 	const { twitchId } = req.params;
 	const { name, aliases, replyText, requiredRole } = req.body;
 	try {
+		// TODO: sanitize command...
+		// TODO: myString.replace(/[^\w\s!]/g,'');
 		const existingCommand = await commandModel.findOne({
 			channelId: twitchId, name
 		});

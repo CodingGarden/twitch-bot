@@ -3,7 +3,9 @@ import API_URL from '../API_URL';
 
 const apiBase = `${API_URL}/api`;
 
-function getUser() {
+// TODO: refresh JWT / re-login user
+// TODO: re-direct to login if JWT expired
+export function getUser() {
   if (!localStorage.token) {
     return null;
   }
@@ -33,10 +35,31 @@ export async function getChannel() {
 
 export async function updateChannel({ enabled }) {
   const { twitchId } = getUser();
-  const { data } = await api.patch(`/channel/${twitchId}`, {
-    enabled,
-  }, {
-    headers: getDefaultHeaders(),
-  });
+  const { data } = await api.patch(`/channel/${twitchId}`,
+    {
+      enabled,
+    },
+    {
+      headers: getDefaultHeaders(),
+    });
+  return data;
+}
+
+export async function listCommands() {
+  const { twitchId } = getUser();
+  const { data } = await api.get(`/channel/${twitchId}/commands`,
+    {
+      headers: getDefaultHeaders(),
+    });
+  return data;
+}
+
+export async function addCommand(newCommand) {
+  const { twitchId } = getUser();
+  const { data } = await api.post(`/channel/${twitchId}/commands`,
+    newCommand,
+    {
+      headers: getDefaultHeaders(),
+    });
   return data;
 }
