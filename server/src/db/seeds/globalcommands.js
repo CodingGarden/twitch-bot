@@ -2,6 +2,7 @@ module.exports = [
 	{
 		name: 'uptime',
 		aliases: [],
+		replyText: 'Channel has been live for: {{twitch.uptime}}',
 		requiredRole: 'viewer'
 	}, {
 		name: 'following',

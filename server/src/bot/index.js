@@ -6,6 +6,7 @@ const globalCommandModel = require('../db/globalcommand');
 const commandModel = require('../db/command');
 const twitchAPI = require('../lib/twitch-api');
 const { sleep } = require('../lib/utils');
+const formatCommand = require('./command-formatter');
 
 /** @type {import('tmi.js').Client} */
 let client;
@@ -135,8 +136,20 @@ async function messageHandler(channel, tags, message, self) {
 		const args = message.slice(1).split(' ');
 		const commandName = args.shift().toLowerCase();
 		const channelId = tags['room-id'];
-		const reply = msg => client.say(channel, msg);
-		commandHandler({ reply, channel, channelId, commandName, args });
+		const context = { channel, channelId, commandName, args };
+		const reply = async msg => {
+			try {
+				msg = await formatCommand(msg, context);
+				console.log({ msg });
+				if (msg.startsWith('/') || msg.startsWith('.')) {
+					msg = 'Nice try! 🙃';
+				}
+				await client.say(channel, msg);
+			} catch (error) {
+				console.error('Error compiling template', error);
+			}
+		};
+		commandHandler({ reply, ...context });
 	}
 }
 

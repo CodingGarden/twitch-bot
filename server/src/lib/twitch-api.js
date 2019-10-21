@@ -78,6 +78,7 @@ async function getAccessToken(refresh_token) {
 	return data;
 }
 
+// TODO: cache results for x amount of time, don't call same API twice simultaneously
 /**
  * @param {string} user_id
  * @return {TwitchStream}

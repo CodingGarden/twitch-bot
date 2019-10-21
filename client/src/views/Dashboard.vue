@@ -23,6 +23,13 @@
         :error="addCommandErrorMessage"
         :aria-hidden="!commandFormToggle"
       />
+      <div class="filter">
+        <label>
+          <div>Search:</div>
+          <input v-model="commandSearch" placeholder="Enter a command name...">
+        </label>
+      </div>
+      <!-- TODO: stagger list animation -->
       <transition-group name="command" tag="div" class="command-list">
         <div class="command command-item" v-for="command in reversedCommands" :key="command._id">
           <div class="command-name">
@@ -59,10 +66,13 @@ export default {
     commandFormToggle: false,
     addingCommand: false,
     addCommandErrorMessage: '',
+    commandSearch: '',
   }),
   computed: {
     reversedCommands() {
-      return this.commands.slice().reverse();
+      return this.commands
+        .filter(n => n.name.includes(this.commandSearch))
+        .reverse();
     },
   },
   async created() {
@@ -130,12 +140,26 @@ export default {
   }
 }
 
+.filter {
+  background: hsl(0, 0, 18%);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  label {
+
+  }
+  input {
+    
+  }
+}
+
 // TODO: animate commands being added
 .command-list {
   margin-bottom: 16px;
 
   &:empty:before {
-    content: 'You have not added any commands, try to adding a command!';
+    content: '🥃';
   }
 }
 

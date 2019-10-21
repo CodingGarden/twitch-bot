@@ -21,6 +21,7 @@
     "helmet": "^3.21.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.4",
+    "mustache": "^3.1.0",
     "saslprep": "^1.0.3",
     "tmi.js": "^1.5.0",
     "volleyball": "^1.5.1"

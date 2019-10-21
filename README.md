@@ -33,7 +33,7 @@ http://localhost:8888/auth/twitch?scope=moderation:read
 * [x] List all commands for a channel
 * [x] Add command to a channel
 	* [ ] `!so <name>`
-* [ ] Architect variables and replyText replacement/format
+* [x] Architect variables and replyText replacement/format
 * [ ] Review TODOs
 <!-- * [ ] Add more TODOs -->
 
@@ -41,6 +41,8 @@ http://localhost:8888/auth/twitch?scope=moderation:read
 ## TODO LATER
 
 * Schema validation with JOI
+* Profanity filter settings for a given channel
+	* use twitch API
 
 ## Colors
 

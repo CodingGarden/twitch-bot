@@ -27,9 +27,10 @@ const api = axios.create({
 
 export async function getChannel() {
   const { twitchId } = getUser();
-  const { data } = await api.get(`/channel/${twitchId}`, {
-    headers: getDefaultHeaders(),
-  });
+  const { data } = await api.get(`/channel/${twitchId}`,
+    {
+      headers: getDefaultHeaders(),
+    });
   return data;
 }
 

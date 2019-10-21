@@ -72,6 +72,7 @@ router.post('/:twitchId/commands', ensureUserAccess, async (req, res, next) => {
 	try {
 		// TODO: sanitize command...
 		// TODO: myString.replace(/[^\w\s!]/g,'');
+		// TODO: check if mustaches, if so, validate all variables to be valid
 		const existingCommand = await commandModel.findOne({
 			channelId: twitchId, name
 		});
@@ -91,6 +92,9 @@ router.patch('/:twitchId/commands/:commandId', ensureUserAccess, async (req, res
 	const { twitchId, commandId } = req.params;
 	const { name, aliases, replyText, requiredRole } = req.body;
 	try {
+		// TODO: sanitize command...
+		// TODO: myString.replace(/[^\w\s!]/g,'');
+		// TODO: check if mustaches, if so, validate all variables to be valid
 		const updated = await commandModel.findOneAndUpdate(
 			{ _id: commandId, channelId: twitchId },
 			Object.fromEntries(
